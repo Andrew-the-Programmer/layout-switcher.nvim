@@ -16,7 +16,9 @@ function M.setup()
 		pattern = "i:n",
 		callback = function()
 			M.last_insert_layout = M.switcher.get_current_layout()
-			M.switcher.set_layout(M.initial_layout)
+			if M.initial_layout ~= M.last_insert_layout then
+				M.switcher.set_layout(M.initial_layout)
+			end
 		end,
 	})
 
@@ -24,7 +26,7 @@ function M.setup()
 	vim.api.nvim_create_autocmd("ModeChanged", {
 		pattern = "*:i",
 		callback = function()
-			if M.last_insert_layout ~= nil then
+			if M.last_insert_layout ~= nil and M.last_insert_layout ~= M.initial_layout then
 				M.switcher.set_layout(M.last_insert_layout)
 			end
 		end,
