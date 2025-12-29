@@ -19,11 +19,12 @@ function M.setup()
 			if status ~= 0 then
 				vim.notify("Failed to get current layout", vim.log.levels.WARN)
 			end
-			if M.initial_layout ~= M.last_insert_layout then
-				status = M.switcher.set_layout(M.initial_layout)
-				if status ~= 0 then
-					vim.notify("Failed to set layout", vim.log.levels.WARN)
-				end
+			if M.initial_layout == M.last_insert_layout then
+				return
+			end
+			status = M.switcher.set_layout(M.initial_layout)
+			if status ~= 0 then
+				vim.notify("Failed to set layout", vim.log.levels.WARN)
 			end
 		end,
 	})
