@@ -4,17 +4,18 @@ This is a simple neovim plugin that manages a hustle of constantly switching bet
 
 # Functionality
 
-> By `us` layout I mean the `initial layout` which will be set by plugin after
-> the `setup()` was called.
+- After calling `setup()`, `initial layout` variable will be set to `current layout`.
 
-- After entering normal mode, layout will always be `us`.
+- After entering normal mode, layout will be set to `initial layout`.
 
-- After entering insert mode for the first time, layout will be `us`.
+- After exiting insert mode into normal mode, `last layout` variable will be
+  set to current layout, then layout will be set to `initial layout`.
 
-- After exiting insert mode into normal mode, neovim will remember the `last layout`,
-  then switch to `us`.
+- After entering insert mode, layout will be set to `last layout`.
 
-- After entering insert mode again, neovim will switch back to the `last layout`.
+> [!NOTE]
+> `current layout` is the layout of the keyboard at the moment.
+> `layout will be set` means that the layout of the keyboard will be set.
 
 # Support for OS/DE/Input_methods
 

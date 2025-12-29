@@ -15,31 +15,26 @@ local function get_device(option)
 	local output = vim.fn.system(cmd)
 	local status = vim.v.shell_error
 	if status ~= 0 then
-		error("Failed to get main device")
-	end
-	output = output:gsub("\n", "")
-	return output
-end
-
--- Helper function to get device config option
-local function get_device_config_option(option)
-	local cmd = ([[
-  hyprctl devices -j | jq -r '
-      .keyboards[] 
-      | select(.name == "%s")
-      | .%s'
-  ]]):format(M.hyprctl_input_device, option)
-	local output = vim.fn.system(cmd)
-	local status = vim.v.shell_error
-	if status ~= 0 then
-		error("Failed to get device config option")
+		vim.notify("Failed to get main device", vim.log.levels.WARN)
 	end
 	output = output:gsub("\n", "")
 	return output
 end
 
 function M.get_current_layout()
-	return get_device_config_option("active_layout_index")
+	local cmd = ([[
+  hyprctl devices -j | jq -r '
+      .keyboards[] 
+      | select(.name == "%s")
+      | .active_layout_index'
+  ]]):format(M.hyprctl_input_device)
+	local output = vim.fn.system(cmd)
+	local status = vim.v.shell_error
+	if status ~= 0 then
+		vim.notify("Failed to get current layout", vim.log.levels.WARN)
+	end
+	output = output:gsub("\n", "")
+	return output
 end
 
 function M.set_layout(index)
@@ -47,7 +42,7 @@ function M.set_layout(index)
 	vim.fn.system(cmd)
 	local status = vim.v.shell_error
 	if status ~= 0 then
-		error("Failed to set layout")
+		vim.notify("Failed to set layout", vim.log.levels.WARN)
 	end
 end
 
