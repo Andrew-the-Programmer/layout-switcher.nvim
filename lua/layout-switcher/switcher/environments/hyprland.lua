@@ -30,22 +30,15 @@ function M.get_current_layout()
   ]]):format(M.hyprctl_input_device)
 	local output = vim.fn.system(cmd)
 	local status = vim.v.shell_error
-	if status ~= 0 then
-		vim.notify("Failed to get current layout", vim.log.levels.WARN)
-	end
 	output = output:gsub("\n", "")
-	vim.notify("Current layout: " .. output, vim.log.levels.INFO)
-	return output
+	return output, status
 end
 
 function M.set_layout(index)
 	local cmd = ('hyprctl switchxkblayout "%s" %d'):format(M.hyprctl_input_device, index)
 	vim.fn.system(cmd)
 	local status = vim.v.shell_error
-	if status ~= 0 then
-		vim.notify("Failed to set layout", vim.log.levels.WARN)
-	end
-	vim.notify("Set layout to: " .. index, vim.log.levels.INFO)
+	return status
 end
 
 function M.setup()

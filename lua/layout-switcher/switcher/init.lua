@@ -1,10 +1,23 @@
 ---@return Switcher
 
 ---@class Switcher
----@field get_current_layout fun(): string|number
----@field set_layout fun(layout: string|number)
+---@field get_current_layout fun(): string|number, number () -> layout, status
+---@field set_layout fun(layout: string|number): number (layout) -> status
 local Switcher = {}
 
-M = require("layout-switcher.switcher.environments.hyprland")
+local environments = {
+	"hyprland",
+}
 
-return M
+local function get_first_awaliable_switcher()
+	for _, env in ipairs(environments) do
+		local switcher = require("layout-switcher.switcher.environments." .. env)
+		local success = pcall(switcher.setup)
+		if success then
+			return switcher
+		end
+	end
+	return nil
+end
+
+return get_first_awaliable_switcher()
