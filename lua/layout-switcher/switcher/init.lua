@@ -5,6 +5,6 @@
 ---@field set_layout fun(layout: string|number)
 local Switcher = {}
 
-M = require("layout-switch.switcher.hyprland")
+M = require("layout-switcher.switcher.environments.hyprland")
 
 return M

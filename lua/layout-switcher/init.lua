@@ -6,7 +6,7 @@ M.last_insert_layout = nil
 M.switcher = nil
 
 function M.setup()
-	M.switcher = require("switcher")
+	M.switcher = require("layout-switcher.switcher")
 	M.switcher.setup()
 
 	M.initial_layout = M.switcher.get_current_layout()
