@@ -34,6 +34,7 @@ function M.get_current_layout()
 		vim.notify("Failed to get current layout", vim.log.levels.WARN)
 	end
 	output = output:gsub("\n", "")
+	vim.notify("Current layout: " .. output, vim.log.levels.INFO)
 	return output
 end
 
@@ -44,6 +45,7 @@ function M.set_layout(index)
 	if status ~= 0 then
 		vim.notify("Failed to set layout", vim.log.levels.WARN)
 	end
+	vim.notify("Set layout to: " .. index, vim.log.levels.INFO)
 end
 
 function M.setup()
